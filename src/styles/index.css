@@ -1,3 +1,126 @@
-li {
-    transition: background-color 0.3s ease;
+
+/* 
+
+    You can write your own styles here...
+    
+    
+    ...Or you can use the import command to include 
+    other sylesheets into your bunde as well, e.j:
+    
+    import 'relative/path/to/stylesheet.scss';
+
+*/
+
+/* 
+
+    You can write your own styles here...
+    
+    
+    ...Or you can use the import command to include 
+    other sylesheets into your bunde as well, e.j:
+    
+    import 'relative/path/to/stylesheet.scss';
+
+*/
+
+* {
+    padding: 0px;
+    margin: 0px;
+    font-family: "Rubik Wet Paint", system-ui;
   }
+  
+  #app {
+    background-image: url("https://imgs.search.brave.com/g_HikcTS-o08HzJwaDqN7dDz5xGPGJ3Dq5taKBxKAV8/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTQz/MDk2MDI0OC9lcy9m/b3RvL2hhcHB5LWhh/bGxvd2Vlbi5qcGc_/cz02MTJ4NjEyJnc9/MCZrPTIwJmM9ZWNu/bEoteEFtczkzSzNV/eG5qZmd0XzdRbFAz/UTZHZ3BXQ1pnYklR/dmhGUT0");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    height: 100vh;
+  }
+  
+  header {
+    display: flex;
+    padding: 0.5rem 2rem 2rem 1rem;
+    justify-content: start;
+    background: rgb(0, 0, 0);
+    background: rgb(0, 0, 0);
+    background: linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 1) 0%,
+      rgba(255, 76, 0, 1) 100%
+    );
+    border-bottom: 10px solid;
+    border-color: black;
+  }
+  
+  .todo {
+    color: cyan;
+  }
+  
+  header > h1 {
+    font-size: 5rem;
+    color: white;
+    font-style: italic;
+  }
+  
+  .input {
+    display: flex;
+    justify-content: center;
+    padding-top: 2rem;
+    font-size: 1.5rem;
+  }
+  
+  input {
+    width: 310px;
+  }
+  
+  .tareas {
+    margin: 1.5rem 3rem 0 3rem;
+  }
+  
+  .carta {
+    margin-bottom: 2rem;
+    height: 16rem;
+    width: 25rem;
+    text-align: center;
+    color: white;
+    background: rgb(255, 76, 0);
+    background: radial-gradient(
+      circle,
+      rgba(255, 76, 0, 1) 0%,
+      rgba(0, 0, 0, 1) 100%
+    );
+  }
+  
+  .cuerpo {
+    overflow: auto;
+  }
+  
+  .carta > div > p {
+    font-size: 2rem;
+  }
+  
+  .carta:hover .boton > button {
+    display: flex;
+    color: red;
+    background-color: inherit;
+    border: none;
+  }
+  
+  .boton {
+    display: flex;
+    justify-content: end;
+    margin: 1rem;
+    font-size: 1.2rem;
+    height: 1rem;
+  }
+  
+  .boton > button {
+    display: none;
+  }
+  
+  .tareasPendientes {
+    text-align: center;
+    font-size: 3rem;
+    color: rgb(255, 255, 255);
+  }
+  
