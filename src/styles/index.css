@@ -21,7 +21,7 @@ i.fa-trash {
 }
 
 span {
-	background: blue;
+	background: rgb(255, 0, 0);
 	height: 35px;
 	width: 0;
 	margin-right: 10px;
@@ -37,19 +37,3 @@ li:hover span {
 	opacity: 1;
 	width: 40px;
 }
-
-.paper {
-    background: #fff;
-    box-shadow:
-      /* The top layer shadow */
-      0 1px 1px rgba(192, 156, 156,0.15),
-      /* The second layer */
-      0 10px 0 -5px #eee,
-      /* The second layer shadow */
-      0 10px 1px -4px rgba(192, 156, 156, 0.15),
-       /* The third layer */
-      0 20px 0 -10px #eee,
-      /* The third layer shadow */
-      0 20px 1px -9px rgba(192, 156, 156, 0.15);
-
-  }
