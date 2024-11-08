@@ -1,97 +1,184 @@
-import React, { useEffect, useState } from "react";
-
-import Carta from "./Carta";
-import Cabecera from "./Cabecera";
-
+import React, {useState, useEffect}from "react";
 
 //create your first component
 const Home = () => {
-  //Hacemos que la api cree un usuario nada más carge la web
-  useEffect(() => {
-    fetch("https://playground.4geeks.com/todo/users/josepindado", {
-      headers: {
-        accept: "application/json",
-        "Content-type": "application/json",
-      },
-      method: "POST"
-    })
-  }, []);
-  const datos = () =>{
-    fetch("https://playground.4geeks.com/todo/users/josepindado")
-      .then(response => response.json())
-      .then(response => setTask(response.todos))
-  } 
-  useEffect(()=>{
-    datos()
-  }, []);
 
-  //Creamos una variable vacía para que almacene los datos del input
-  const [tarea, setTarea] = useState("");
+	const [newTask, setNewTask] = useState("");
+	const [tasks, setTasks] = useState([{label: "No tasks here, add tasks"}]);
 
-  // Creamos un array vacio para que almacene los datos que le llegan de la variable de tarea
-  const [task, setTask] = useState([{}]);
+	
+	useEffect(() => {
+		getUsers();
+	  }, []);
+	
+	const TaskChanger = (event) => {
+		if (event.target.value !== "") {setNewTask(event.target.value)}
+	}
+	const addTask = (event) => {
+		if (event.target.value !== "") {
+			if (event.key == "Enter") {
+				addTodo(newTask);
+				setNewTask("")
+				getTodos();
+			}	
+		}
+	}
+	const deteleTask = (event, id) => {
+		deleteTodo(id);
 
-  //Creamos la funcion para que el programa lea el valor que hay en el input y lo almacene en tarea
-  const handleChange = (event) => {
-    setTarea(event.target.value);
-  };
+	}
 
+	const getUsers = () =>{
+		console.log("-----------getUsers----------------")
+		fetch('https://playground.4geeks.com/todo/users?offset=0&limit=100', {
+			method: "GET",
+			headers: {
+			  "Content-Type": "application/json"
+			}
+		  })
+		  .then(resp => {
+			  console.log(`resp.status:` , resp.status, `resp.statusText:`, resp.statusText); 
+			  return resp.json(); 
+		  })
+		  .then(data => {
+			const users = data.users; 
+			users.find((user) => {return user.name === "josepindado"}) 
+				? getTodos()
+				: createUser()
+		  })
+		  .catch(error => {
+			  console.log(error);
+		  });
+	}
 
-  //Creamos la funcion para que añada un elemento nuevo al array task
-  const nuevaTarea = () => {
-    //Validamos que si no hay informacion en la variable tarea no pueda añadir nada al array de task
-    if (tarea == "") {
-      alert("Debes crear una tarea");
-    } else {
-      //Creamos un objeto para almacenar la tarea
-      const newTask = {
-        label: tarea,
-        is_done: false
-      }
-      //hacemos el fetch para que cree la tarea
-      fetch("https://playground.4geeks.com/todo/todos/josepindado", {
-        method: "POST",
-        headers: {
-          accept: "application/json",
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify(newTask)
-      });
-      datos();
-      setTarea();
-    }
-  };
+	const createUser = async () => {
+		console.log("-----------createUser----------------")
+		await fetch('https://playground.4geeks.com/todo/users/josepindado', {
+			method: "POST",
+			headers: {
+			  "Content-Type": "application/json"
+			}
+		  })
+		  .then(resp => {
+			  console.log(`resp.status:` , resp.status, `resp.statusText:`, resp.statusText); 
+			  console.log(resp.ok); 
+			  console.log(resp.status); 
+			  console.log(resp.text());
+			  return resp; 
+		  })
+		  .then(data => {
+			  console.log("data");
+			  console.log(data); 
+		  })
+		  .catch(error => {
+			  console.log(error);
+		  });
+	}
 
+	const getTodos = async () => {
+		console.log("-----------getTodos----------------")
+		await fetch('https://playground.4geeks.com/todo/users/josepindado', {
+			method: "GET",
+			headers: {
+			  "Content-Type": "application/json"
+			}
+		  })
+		  .then(resp => {
+			  console.log(`resp:` , resp); 
+			  console.log(`resp.status:` , resp.status, `resp.statusText:`, resp.statusText); 
+			  return resp.json(); 
+		  })
+		  .then(data => {
+			console.log(`data:` , data); 
+			data.todos.length === 0 
+				? setTasks([{label: "No tasks here, add tasks"}])
+				: setTasks(data.todos)			
+		  })
+		  .catch(error => {
+			  console.log(error);
+		  });
+	}
 
-  return (
-    <div>
-      <Cabecera input={handleChange} nuevaTarea={nuevaTarea} />
-      <div className="row tareas">
-        {task.length > 0 ? (
-          //Mapeamos el array que tenemos en cada momento
-          task.map((element) => {
-            //Creamos la funcion que elimina la carta seleccionada
-            const eliminarTarea = () => {
-              fetch(`https://playground.4geeks.com/todo/todos/${element.id}`, {
-                method: "DELETE"
-              })
-              datos();
-            };
-            //Retornamos una carta por cada elemento del array
-            return (
-              <>
-                <Carta task={element.label} eliminarTarea={eliminarTarea} />
-              </>
-            );
-          })
-        ) : (
-          <div className="tareasPendientes">
-            <p>No hay tareas, añadir tareas</p>
-          </div>
-        )}
-      </div>
-    </div>
-  );
+	const addTodo = async (task) => {
+		console.log("-----------addTodo----------------")
+		await fetch('https://playground.4geeks.com/todo/todos/josepindado', {
+			method: "POST",
+			body: JSON.stringify({
+				label: task,
+				is_done: false
+			}),
+			headers: {
+			"Content-Type": "application/json",
+			"accept": "application/json"
+			}
+		})
+		.then(resp => {
+			console.log(`resp.status:` , resp.status, `resp.statusText:`, resp.statusText); 
+			return resp; 
+		})
+		.then(data => {
+			console.log(data); 
+			getTodos();
+		})
+		.catch(error => {
+			console.log(error);
+		});
+	}
+
+	const deleteTodo = (idTask) =>{
+		console.log("-----------deleteTodo----------------")
+		console.log(`idTask: ${idTask}`);
+		fetch('https://playground.4geeks.com/todo/todos/' + idTask, {
+			method: "DELETE",
+			headers: {
+				"accept": "application/json"
+				}
+		}).then(resp => {
+			console.log(`resp.status:` , resp.status, `resp.statusText:`, resp.statusText); 
+			return resp;
+		}).then(data => {
+			console.log(data);
+			getTodos();
+		}).catch (error => {
+			console.log(error);
+		})
+	}
+
+	const deleteAllTasks = () => {
+		console.log("-----------deleteAllTasks----------------")
+		fetch('https://playground.4geeks.com/todo/users/josepindado', {
+			method: "DELETE",
+			headers: {
+				"accept": "application/json"
+				}
+		}).then(resp => {
+			console.log(`resp.status:` , resp.status, `resp.statusText:`, resp.statusText); 
+			return resp;
+		}).then(data => {
+			console.log(data);
+			setTasks([{label: "No tasks here, add tasks"}])
+			createUser()
+		}).catch (error => {
+			console.log(error);
+		})
+	}
+
+	return (
+		<div className="container mt-5">
+			<h1 className="todo-header text-center">Todos</h1>
+			<input className="form-control" type="text" onChange={TaskChanger} onKeyDown={addTask} value={newTask} placeholder="Add to do here"/>
+			<ul className="list-group">
+				{tasks.map((task, index) => {
+					return <li key={index} id={task.id} className="list-group-item"><span onClick={(e)=>{deteleTask(e,task.id)}}><i className="fa fa-trash"></i></span>{task.label}</li>
+				})}
+				<li className="list-group-item paper"><small className="">{tasks.length} item left</small></li>
+	  		</ul>
+			<div className="text-center">
+				<div className="btn btn-danger mt-4" onClick={deleteAllTasks}>Delete all</div>
+			</div>
+		</div>
+
+	);
 };
 
 export default Home;
