@@ -155,9 +155,11 @@ const Home = () => {
 			<input className="form-control" type="text" onChange={TaskChanger} onKeyDown={addTask} value={newTask} placeholder="Añadir una tarea"/>
 			<ul className="list-group">
 				{tasks.map((task, index) => {
-					return <li key={index} id={task.id} className="list-group-item"><span onClick={(e)=>{deteleTask(e,task.id)}}><i className="fa fa-trash"></i></span>{task.label}</li>
+					return <li key={index} id={task.id} className="list-group-item">{task.label}<button type="button" class="btn btn-danger ms-3" onClick={(e)=>{deteleTask(e,task.id)}}><i className="fa fa-trash"></i></button></li>
 				})}
 				<li className="list-group-item paper"><small className="">{tasks.length} Items añadidos</small></li>
+				
+
 	  		</ul>
 			<div className="text-center">
 				<div className="btn btn-danger mt-4" onClick={deleteAllTasks}>Borrar todo</div>

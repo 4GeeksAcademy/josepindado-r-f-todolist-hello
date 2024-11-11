@@ -14,26 +14,12 @@ small {
     font-size: 0.7em;
 }
 
-
-
-i.fa-trash {
-	margin: 7px;
-}
-
-span {
-	background: rgb(255, 0, 0);
-	height: 35px;
-	width: 0;
-	margin-right: 10px;
-	margin-left: -10px;
-	text-align: center;
-	display: inline-block;
-	color: white;
+button {
 	opacity: 0;
 	transition: 0.2s linear;
 }
 
-li:hover span {
+li:hover button {
 	opacity: 1;
-	width: 40px;
+	
 }
