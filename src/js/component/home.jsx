@@ -85,7 +85,7 @@ const Home = () => {
 		  .then(data => {
 			console.log(data); 
 			data.todos.length === 0 
-				? setTasks([{label: "Añadir tareas"}])
+				? setTasks([{label: "Añadir una tarea"}])
 				: setTasks(data.todos)			
 		  })
 		  .catch(error => {
@@ -120,7 +120,7 @@ const Home = () => {
 //---------------------DELETE / BORRAR TAREA--------------------
 	const deleteTodo = (idTask) =>{
 		console.log(`idTask: ${idTask}`);
-		fetch('https://playground.4geeks.com/todo/todos/${idTask}' + idTask, {
+		fetch('https://playground.4geeks.com/todo/todos/' +idTask, {
 			method: "DELETE",
 			headers: {
 				"accept": "application/json"
@@ -144,6 +144,10 @@ const Home = () => {
 				}
 		}).then(resp => {
 			return resp;
+		}).then(data => {
+			console.log(data);
+			setTasks([{label: "Añadir una tarea"}])
+			createUser()
 		}).catch (error => {
 			console.log(error);
 		})
