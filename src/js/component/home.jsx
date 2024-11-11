@@ -5,7 +5,7 @@ const Home = () => {
 	const [newTask, setNewTask] = useState("");
 	const [tasks, setTasks] = useState([]);
 
-	
+//--------------------- [] => useEffect se ejecuta una vez --------------------
 	useEffect(() => {
 		getUsers();
 	  }, []);
@@ -29,7 +29,7 @@ const Home = () => {
 
 	}
 
-	//---------------------GET / RECUPERAR USUARIOS--------------------
+//---------------------GET / RECUPERAR USUARIOS--------------------
 	const getUsers = () =>{
 				fetch('https://playground.4geeks.com/todo/users?offset=0&limit=100', {
 			method: "GET",
@@ -51,7 +51,7 @@ const Home = () => {
 		  });
 	}
 
-	//---------------------POST / AÑADIR USUARIO--------------------
+//---------------------POST / AÑADIR USUARIO--------------------
 	const createUser = async () => {
 		await fetch('https://playground.4geeks.com/todo/users/josepindado', {
 			method: "POST",
@@ -71,7 +71,7 @@ const Home = () => {
 		  });
 	}
 
-	//---------------------GET / RECUPERAR TAREAS--------------------
+//---------------------GET / RECUPERAR TAREAS--------------------
 	const getTodos = async () => {
 		await fetch('https://playground.4geeks.com/todo/users/josepindado', {
 			method: "GET",
@@ -120,7 +120,7 @@ const Home = () => {
 //---------------------DELETE / BORRAR TAREA--------------------
 	const deleteTodo = (idTask) =>{
 		console.log(`idTask: ${idTask}`);
-		fetch('https://playground.4geeks.com/todo/todos/' + idTask, {
+		fetch('https://playground.4geeks.com/todo/todos/${idTask}' + idTask, {
 			method: "DELETE",
 			headers: {
 				"accept": "application/json"
@@ -150,16 +150,14 @@ const Home = () => {
 	}
 
 	return (
-		<div className="container mt-5">
+		<div className="container mt-3">
 			<h1 className="todo-header text-center">ToDo List React & Fetch</h1>
 			<input className="form-control" type="text" onChange={TaskChanger} onKeyDown={addTask} value={newTask} placeholder="Añadir una tarea"/>
 			<ul className="list-group">
 				{tasks.map((task, index) => {
-					return <li key={index} id={task.id} className="list-group-item">{task.label}<button type="button" class="btn btn-danger ms-3" onClick={(e)=>{deteleTask(e,task.id)}}><i className="fa fa-trash"></i></button></li>
+					return <li key={index} id={task.id} className="list-group-item">{task.label}<button type="button" class="btn btn-danger ms-3" onClick={(event)=>{deteleTask(event,task.id)}}><i className="fa fa-trash"></i></button></li>
 				})}
-				<li className="list-group-item paper"><small className="">{tasks.length} Items añadidos</small></li>
-				
-
+				<li className="list-group-item paper"><span className="">{tasks.length} Items añadidos</span></li>
 	  		</ul>
 			<div className="text-center">
 				<div className="btn btn-danger mt-4" onClick={deleteAllTasks}>Borrar todo</div>
