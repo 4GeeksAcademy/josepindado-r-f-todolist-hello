@@ -1,4 +1,4 @@
-import React, {useState, useEffect}from "react";
+import React, {useState, useEffect} from "react";
 
 const Home = () => {
 
@@ -11,7 +11,9 @@ const Home = () => {
 	  }, []);
 	
 	const TaskChanger = (event) => {
-		if (event.target.value !== "") {setNewTask(event.target.value)}
+		if (event.target.value !== "") {
+			setNewTask(event.target.value)
+		}
 	}
 	const addTask = (event) => {
 		if (event.target.value !== "") {
@@ -27,6 +29,7 @@ const Home = () => {
 
 	}
 
+	//---------------------GET / RECUPERAR USUARIOS--------------------
 	const getUsers = () =>{
 				fetch('https://playground.4geeks.com/todo/users?offset=0&limit=100', {
 			method: "GET",
@@ -35,7 +38,6 @@ const Home = () => {
 			}
 		  })
 		  .then(resp => {
-			  console.log(`resp.status:` , resp.status, `resp.statusText:`, resp.statusText); 
 			  return resp.json(); 
 		  })
 		  .then(data => {
@@ -49,6 +51,7 @@ const Home = () => {
 		  });
 	}
 
+	//---------------------POST / AÑADIR USUARIO--------------------
 	const createUser = async () => {
 		await fetch('https://playground.4geeks.com/todo/users/josepindado', {
 			method: "POST",
@@ -57,14 +60,10 @@ const Home = () => {
 			}
 		  })
 		  .then(resp => {
-			  console.log(`resp.status:` , resp.status, `resp.statusText:`, resp.statusText); 
 			  console.log(resp.ok); 
-			  console.log(resp.status); 
-			  console.log(resp.text());
-			  return resp; 
+			   return resp; 
 		  })
 		  .then(data => {
-			  console.log("data");
 			  console.log(data); 
 		  })
 		  .catch(error => {
@@ -72,6 +71,7 @@ const Home = () => {
 		  });
 	}
 
+	//---------------------GET / RECUPERAR TAREAS--------------------
 	const getTodos = async () => {
 		await fetch('https://playground.4geeks.com/todo/users/josepindado', {
 			method: "GET",
@@ -80,12 +80,10 @@ const Home = () => {
 			}
 		  })
 		  .then(resp => {
-			  console.log(`resp:` , resp); 
-			  console.log(`resp.status:` , resp.status, `resp.statusText:`, resp.statusText); 
-			  return resp.json(); 
+			return resp.json(); 
 		  })
 		  .then(data => {
-			console.log(`data:` , data); 
+			console.log(data); 
 			data.todos.length === 0 
 				? setTasks([{label: "Añadir tareas"}])
 				: setTasks(data.todos)			
@@ -94,7 +92,7 @@ const Home = () => {
 			  console.log(error);
 		  });
 	}
-
+//---------------------POST / AÑADIR TAREAS--------------------
 	const addTodo = async (task) => {
 		await fetch('https://playground.4geeks.com/todo/todos/josepindado', {
 			method: "POST",
@@ -108,7 +106,6 @@ const Home = () => {
 			}
 		})
 		.then(resp => {
-			console.log(`resp.status:` , resp.status, `resp.statusText:`, resp.statusText); 
 			return resp; 
 		})
 		.then(data => {
@@ -120,6 +117,7 @@ const Home = () => {
 		});
 	}
 
+//---------------------DELETE / BORRAR TAREA--------------------
 	const deleteTodo = (idTask) =>{
 		console.log(`idTask: ${idTask}`);
 		fetch('https://playground.4geeks.com/todo/todos/' + idTask, {
@@ -128,7 +126,6 @@ const Home = () => {
 				"accept": "application/json"
 				}
 		}).then(resp => {
-			console.log(`resp.status:` , resp.status, `resp.statusText:`, resp.statusText); 
 			return resp;
 		}).then(data => {
 			console.log(data);
@@ -138,6 +135,7 @@ const Home = () => {
 		})
 	}
 
+//---------------------DELETE / BORRAR TAREAS--------------------
 	const deleteAllTasks = () => {
 		fetch('https://playground.4geeks.com/todo/users/josepindado', {
 			method: "DELETE",
@@ -145,7 +143,6 @@ const Home = () => {
 				"accept": "application/json"
 				}
 		}).then(resp => {
-			console.log(`resp.status:` , resp.status, `resp.statusText:`, resp.statusText); 
 			return resp;
 		}).catch (error => {
 			console.log(error);
