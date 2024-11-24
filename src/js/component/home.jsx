@@ -85,7 +85,7 @@ const Home = () => {
 		  .then(data => {
 			console.log(data); 
 			data.todos.length === 0 
-				? setTasks([{label: "Añadir una tarea"}])
+				? setTasks([])
 				: setTasks(data.todos)			
 		  })
 		  .catch(error => {
@@ -161,7 +161,7 @@ const Home = () => {
 				{tasks.map((task, index) => {
 					return <li key={index} id={task.id} className="list-group-item">{task.label}<button type="button" class="btn btn-danger ms-3" onClick={(event)=>{deteleTask(event,task.id)}}><i className="fa fa-trash"></i></button></li>
 				})}
-				<li className="list-group-item paper"><span className="">{tasks.length} Items añadidos</span></li>
+				<li className="list-group-item"><span className="">{tasks.length} Items añadidos</span></li>
 	  		</ul>
 			<div className="text-center">
 				<div className="btn btn-danger mt-4" onClick={deleteAllTasks}>Borrar todo</div>
